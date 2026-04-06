@@ -13,6 +13,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,6 +39,8 @@ public class UsuarioModel {
     @Column(unique = true)
     private String email;
     private String senha;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private UsuarioRole role;
     private Boolean ativo = true;
     @Column(name = "stripe_customer_id")

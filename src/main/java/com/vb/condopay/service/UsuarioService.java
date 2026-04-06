@@ -1,5 +1,6 @@
 package com.vb.condopay;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.vb.condopay.database.repository.IUsuarioRepository;
@@ -15,18 +16,18 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioService {
     private final IUsuarioRepository repository;
     private final IUsuarioMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
-    // POST
     @Transactional
     public UsuarioResponseDto cadastrarUsuario(UsuarioRequestDto dto) {
         if (repository.existsByEmail(dto.email())) {
-            // 409
             throw new ConflitoException("EMAIL JÁ CADASTRADO NO SISTEMA, TENTE NOVAMENTE!!");
         }
-        var usuarioSalvo = repository.save(mapper.toEntity(dto));
-        // 201
+
+        var entity = mapper.toEntity(dto);
+        entity.setSenha(passwordEncoder.encode(dto.senha()));
+
+        var usuarioSalvo = repository.save(entity);
         return mapper.toResponse(usuarioSalvo);
     }
-
-
 }

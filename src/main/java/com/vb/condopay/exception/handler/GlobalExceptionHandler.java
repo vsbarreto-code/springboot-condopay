@@ -10,4 +10,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                              .body(exception.getMessage());
     }
+
+    @ExceptionHandler(NaoEncontradoException.class)
+    public ResponseEntity<String> handlerNaoEncontradoException(NaoEncontradoException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                             .body(exception.getMessage());
+    }
+
+
 }
