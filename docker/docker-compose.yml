@@ -1,0 +1,50 @@
+# Versão da sintaxe do Docker Compose. '3.8' é uma versão moderna e estável.
+version: '3.8'
+
+# 'services' é onde definimos os containers que farão parte da nossa aplicação.
+services:
+  # 1. O serviço do nosso banco de dados PostgreSQL.
+  postgres:
+    image: postgres:14-alpine  # A imagem que o Docker vai baixar do Docker Hub. Usamos a 14 na versão 'alpine' por ser bem leve.
+    container_name: condopay_db_postgres # Um nome fixo para o container, facilita a identificação.
+    restart: always # Garante que o container reinicie se cair por algum motivo.
+    environment:
+      # Variáveis de ambiente para configurar o PostgreSQL na primeira vez que ele sobe.
+      - POSTGRES_USER=admin      # Nome de usuário do banco
+      - POSTGRES_PASSWORD=admin  # Senha do banco
+      - POSTGRES_DB=condopay_db     # Nome do banco de dados que será criado
+    ports:
+      # Mapeia a porta do container para a porta da sua máquina (host).
+      # Formato: "HOST:CONTAINER"
+      # Assim, podemos conectar no banco usando localhost:5432.
+      - "5433:5432"
+    volumes:
+      # 'volumes' garantem que os dados do banco persistam mesmo se o container for removido e recriado.
+      # 'postgres_data' é um "volume nomeado" gerenciado pelo Docker. É a forma mais recomendada.
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. O serviço da nossa aplicação Spring Boot (será adicionado na Etapa 4).
+  app:
+    build: . # Pede para o Docker Compose construir a imagem a partir do Dockerfile no diretório atual.
+    container_name: condopay_app_spring
+    restart: on-failure
+    ports:
+      - "8080:8080" # Mapeia a porta da aplicação.
+    environment:
+      # Passamos as configurações de conexão como variáveis de ambiente.
+      # O Spring Boot vai ler essas variáveis.
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/condopay_db
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      # Exibe os comandos SQL no console
+      - SPRING_JPA_SHOW_SQL=true
+      # Formata o SQL para ficar bem indentado e legível
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      # (Opcional) Destaca o SQL com cores no terminal
+      - SPRING_JPA_PROPERTIES_HIBERNATE_HIGHLIGHT_SQL=true
+    depends_on:
+      - postgres # Garante que o container 'postgres' suba ANTES do container 'app'. Essencial!
+
+# O Docker gerencia a criação deste volume para nós.
+volumes:
+  postgres_data:
