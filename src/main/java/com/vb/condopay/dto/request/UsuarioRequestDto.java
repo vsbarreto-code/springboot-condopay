@@ -14,7 +14,6 @@ public record UsuarioRequestDto(
     @NotBlank(message = "A senha do usuário é obrigatório")
     String senha,
     @NotNull(message = "O tipo do usuário é obrigatório")
-    UsuarioRole role,
-    String stripeCustomerId //QUANDO ENTRAR API STRIPE SAI!!!
+    UsuarioRole role
 ) {
 }

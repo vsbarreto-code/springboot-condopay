@@ -43,8 +43,6 @@ public class UsuarioModel {
     @Column(nullable = false)
     private UsuarioRole role;
     private Boolean ativo = true;
-    @Column(name = "stripe_customer_id")
-    private String stripeCustomerId;
     @CreatedDate
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;

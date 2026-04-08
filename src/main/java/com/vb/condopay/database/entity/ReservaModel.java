@@ -1,5 +1,6 @@
 package com.vb.condopay.database.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -30,18 +31,16 @@ public class ReservaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private StatusEnum status = StatusEnum.PENDENTE;
-    @Column(name = "stripe_checkout_id")
-    private String stripeCheckoutId;
+    private StatusEnum status = StatusEnum.CONFIRMADO;
     @Column(name = "data_inicio")
     private LocalDateTime dataInicio;
     @Column(name = "data_fim")
     private LocalDateTime dataFim;
-    @Column(name = "expira_em")
-    private LocalDateTime expiraEm;
     @CreatedDate
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
+    @Column(name = "valor_cobrado")
+    private BigDecimal valorCobrado;
 
     //Reserva -> Usuario -> ManyToOne
     @ManyToOne
