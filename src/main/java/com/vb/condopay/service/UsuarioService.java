@@ -25,6 +25,7 @@ public class UsuarioService {
     private final IUsuarioMapper mapper;
     private final PasswordEncoder passwordEncoder;
 
+    // POST
     @Transactional
     public UsuarioResponseDto cadastrarUsuario(UsuarioRequestDto dto) {
         if (repository.existsByEmail(dto.email())) {
@@ -38,6 +39,7 @@ public class UsuarioService {
         return mapper.toResponse(usuarioSalvo);
     }
 
+    // GET
     public List<UsuarioResponseDto> listarUsuario() {
         List<UsuarioModel> lista = repository.findAll();
 
@@ -46,6 +48,7 @@ public class UsuarioService {
                     .toList();
     }
 
+    // GET
     public UsuarioResponseDto buscarUsuario(UUID id) {
         var usuario = repository.findById(id)
                                 .orElseThrow(() -> new NaoEncontradoException("Usuario não encontrado!!"));
@@ -53,6 +56,7 @@ public class UsuarioService {
         return mapper.toResponse(usuario);
     }
 
+    // GET
     public UsuarioResponseDto usuarioLogado(Jwt jwt) {
         var email = jwt.getSubject();
 
