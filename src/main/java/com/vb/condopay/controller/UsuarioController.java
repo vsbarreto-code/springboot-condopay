@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.vb.condopay.UsuarioService;
 import com.vb.condopay.dto.request.UsuarioRequestDto;
 import com.vb.condopay.dto.response.UsuarioResponseDto;
 
@@ -24,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
 public class UsuarioController {
-    private final UsuarioService service;
+    private final com.vb.condopay.service.UsuarioService service;
 
     @PostMapping("/usuario")
     @PreAuthorize("hasRole('SINDICO')")
@@ -49,6 +48,7 @@ public class UsuarioController {
 
 
     @GetMapping("usuario/me")
+    @PreAuthorize("hasAnyRole('SINDICO', 'MORADOR')")
     public ResponseEntity<UsuarioResponseDto> usuarioLogado(
         @AuthenticationPrincipal Jwt jwt) {
         return ResponseEntity.ok(service.usuarioLogado(jwt));

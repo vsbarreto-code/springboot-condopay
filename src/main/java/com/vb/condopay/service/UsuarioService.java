@@ -1,9 +1,8 @@
-package com.vb.condopay;
+package com.vb.condopay.service;
 
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class UsuarioService {
     // GET
     public UsuarioResponseDto buscarUsuario(UUID id) {
         var usuario = repository.findById(id)
-                                .orElseThrow(() -> new NaoEncontradoException("Usuario não encontrado!!"));
+                                .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado!!"));
 
         return mapper.toResponse(usuario);
     }
