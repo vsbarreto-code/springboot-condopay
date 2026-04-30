@@ -4,21 +4,6 @@
 
 ---
 
-## 📋 Sumário
-
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Tecnologias](#tecnologias)
-- [Arquitetura](#arquitetura)
-- [Funcionalidades](#funcionalidades)
-- [Endpoints](#endpoints)
-- [Autenticação](#autenticação)
-- [Regras de Negócio](#regras-de-negócio)
-- [Como Executar](#como-executar)
-- [Testes](#testes)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-
----
-
 ## 📌 Sobre o Projeto
 
 O **CondoPay** é uma API desenvolvida para facilitar a gestão condominial. O sistema permite que o **síndico** cadastre moradores e áreas comuns, enquanto os **moradores** podem fazer reservas dessas áreas de forma prática e segura.
