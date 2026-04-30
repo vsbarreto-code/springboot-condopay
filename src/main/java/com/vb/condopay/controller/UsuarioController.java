@@ -46,7 +46,6 @@ public class UsuarioController {
                              .body(service.buscarUsuario(id));
     }
 
-
     @GetMapping("usuario/me")
     @PreAuthorize("hasAnyRole('SINDICO', 'MORADOR')")
     public ResponseEntity<UsuarioResponseDto> usuarioLogado(
